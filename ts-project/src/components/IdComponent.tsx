@@ -1,80 +1,62 @@
-// import React, { useEffect, useState } from 'react'
-import { Card, CardDeck } from 'react-bootstrap'
-//import { useParams} from 'react-router-dom'
-import { INew } from '../interfaces/INew'
-
-interface IdComponentProps{
-  new: INew
-}
+import  { useEffect, useState} from 'react'
+import { Button, Col, Container, Row} from 'react-bootstrap'
+import { useParams} from 'react-router-dom'
+import INew from '../interfaces/INew'
 
 
-const IdComponent =(props: IdComponentProps) => {
+const IdComponent =() => {
+
+  const params = useParams()
+  const id = params.id
+  const [news, setNews] = useState<INew | null>(null)
+
+
+  useEffect(() => {
+    getNews()
+    
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []) 
+   
+   const getNews = async () => {
+    try {
+      const response = await fetch('https://api.spaceflightnewsapi.net/v3/articles/' + params.id)
+      if (response.ok) {
+       const data  = await response.json()
+       setNews(data)
+       console.log(id)
+      } else {
+        alert('Error fetching results')
+   
+      }
+    } catch (error) {
+      console.log(error)
+    }
+   }
 
   return (
-    <CardDeck>
-    <Card
-      className="bg-dark text-white"
-    >
-      <Card.Img
-        style={{ height: "10em" }}
-        src={props.new.imageUrl}
-        alt="Card image"
-      />
-      <Card.ImgOverlay>
-        <Card.Title>{props.new.title}</Card.Title>
-        <Card.Text> {props.new.summary}</Card.Text>
-        <Card.Text>{props.new.newsSite} {props.new.url} </Card.Text>
-        <Card.Text>{props.new.publishedAt.toString()}</Card.Text>
-      </Card.ImgOverlay>
-    </Card>
-  </CardDeck>
+    
+   <Container className="mt-4 text-center">
+    <Row>
+      <Col>
+      {
+      news ? (
+      <>
+    <img src={news.imageUrl} alt="a pic" style={{height: '25em', width: 'auto'}}/>
+    <h2>{news.title}</h2>
+    <p>{news.summary}</p>
+    <p>{news.newsSite}</p>
+    <Button variant="success" onClick={() => window.location.assign(news.url)}>Read the full article</Button>
+</>
+
+
+
+      ) : <></> }
+     
+      </Col>
+    </Row>
+   </Container>
   )
 }
 
 export default IdComponent 
 
-/*    id:          number;
-    title:       string;
-    url:         string;
-    imageUrl:    string;
-    newsSite:    NewsSite;
-    summary:     string;
-    publishedAt: Date;
-    updatedAt:   Date;
-    featured:    boolean;
-    launches:    Launch[];
-    events:      any[];
-  
-  
-  .toString()
-  
-  
-  
-   const [news, setNews] = useState<INew[]>([])
-  const params = useParams()
-
-  const URL = "https://api.spaceflightnewsapi.net/v3/articles";
-
-
-  useEffect(() => {
-    getNews()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) 
-
-  const getNews = async () => {
-    try {
-      const response = await fetch(URL + params.companyName)
-      if (response.ok) {
-        const { data } = await response.json()
-        setNews(data)
-      } else {
-        alert('Error fetching results')
-  
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }*/
-
-
-  

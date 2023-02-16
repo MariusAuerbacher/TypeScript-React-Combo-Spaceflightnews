@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
 import NewComponent from "./NewComponent";
-import { INew } from "../interfaces/INew";
+import  INew  from "../interfaces/INew";
 
 
 const FetchComponent = () => {
@@ -31,15 +31,15 @@ const FetchComponent = () => {
   }, []);
 
   return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col className="text-center">
+    <Container className="text-center my-4">
+      <Row className="justify-content-center my-4">
+        <Col>
           <h2>Spaceflight news from around the world</h2>
         </Col>
       </Row>
       <Row>
         {news.map((n) => (
-          <Col xs={12} md={2} lg={2} className="text-dark" key={n.id}>
+          <Col xs={12} md={8} lg={6} key={n.id}>
             <NewComponent new={n}/>
             
           </Col>

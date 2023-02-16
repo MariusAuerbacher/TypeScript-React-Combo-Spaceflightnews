@@ -1,40 +1,33 @@
 import React from "react";
-import { INew } from "../interfaces/INew";
-import { Card, Col, Container, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import INew from "../interfaces/INew";
+import { Card, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 //import IdComponent from "./IdComponent";
 
 interface NewComponentProps {
   new: INew;
 }
 
-
 const NewComponent = (props: NewComponentProps) => {
-  const navigate = useNavigate()
-return(
-  <Container>
-    <Row>
-      <Col>
-    <Card
-      className="bg-dark text-white"
-      onClick={() => navigate("/details/:id")}
-
-    >
-      <Card.Img
-        style={{ height: "10em" }}
-        src={props.new.imageUrl}
-        alt="Card image"
-      />
-      <Card.ImgOverlay>
-        <Card.Title>{props.new.title}</Card.Title>
-        <Card.Text>{props.new.newsSite}</Card.Text>
-      </Card.ImgOverlay>
-      {/*<IdComponent new={props.new}/>*/}
-    </Card>
+  return (
+    <Col className="mb-4" key={props.new.id}>
+      <Link to={`/details/${props.new.id}`} >
+      <Card
+        className="bg-dark text-white"
+        //onClick={() => navigate("/details/:id")}
+      >
+        <Card.Img
+          style={{ height: "15em" }}
+          src={props.new.imageUrl}
+          alt="Card image"
+        />
+          <Card.Title>{props.new.title}</Card.Title>
+          <Card.Text>by {props.new.newsSite} at {new Date (props.new.publishedAt).toLocaleTimeString()}</Card.Text>
+        {/*<IdComponent new={props.new}/>*/}
+      </Card>
+      </Link>
     </Col>
-    </Row>
-  </Container>
-)
+  );
 };
 
 export default NewComponent;

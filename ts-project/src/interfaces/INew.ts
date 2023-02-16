@@ -1,4 +1,7 @@
-export interface INew {
+import { NewsSite } from "./NewsSite";
+import { Launch } from "./Launch";
+
+ interface INew {
     id:          number;
     title:       string;
     url:         string;
@@ -12,14 +15,5 @@ export interface INew {
     events:      any[];
 }
 
-export interface Launch {
-    id:       string;
-    provider: string;
-}
 
-export enum NewsSite {
-    Arstechnica = "Arstechnica",
-    SpaceNews = "SpaceNews",
-    Teslarati = "Teslarati",
-}
-
+export default INew
